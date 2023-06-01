@@ -111,9 +111,8 @@ function App() {
       <li>
         <input type="button" value="Delete" onClick={event => {
           event.preventDefault();
-          const newTopics = [...topics];
-          const newTopics2 = newTopics.filter((item) => item.id !== parseInt(id));
-          setTopics(newTopics2);
+          const newTopics = topics.filter((item) => item.id !== parseInt(id));
+          setTopics(newTopics);
           setMode('WELCOME');
         }} />
       </li>
