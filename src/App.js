@@ -1,5 +1,5 @@
 // import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 import {useState} from 'react';
 
 function Header(props){
@@ -7,7 +7,7 @@ function Header(props){
     e.preventDefault();
     props.onChangeMode();
   }
-  return <header>
+  return <header className="app-header">
   <h1><a href="/" onClick={anchorClick}>{props.title}</a></h1>
 </header>
 }
@@ -26,7 +26,7 @@ function Nav(props){
     e.preventDefault();
     props.onChangeMode(e.target.id);
   }
-  return <nav>
+  return <nav className="app-navi">
   <ol>
     {lis}
   </ol>
@@ -34,24 +34,24 @@ function Nav(props){
 }
 
 function Article(props){
-  return <article>
+  return <article className="app-contents">
     <h2>{props.title}</h2>
     <p>{props.body}</p>
   </article>
 }
 
 function Create(props){
-  return <article>
+  return <article className="app-contents">
     <h2>Create</h2>
-    <form onSubmit={ event => {
+    <form className="app-form" onSubmit={ event => {
       event.preventDefault();
       const title = event.target.title.value;
       const body = event.target.body.value;
       props.onCreate(title, body);
     }}>
-      <p><input type="text" name="title" placeholder="title" /></p>
-      <p><textarea name="body" placeholder="body"></textarea></p>
-      <p><input type="submit" value="Create" /></p>
+      <p><input type="text" className="input" name="title" placeholder="title" /></p>
+      <p><textarea name="body" rows="3" className="textarea" placeholder="body"></textarea></p>
+      <p><input className="btn" type="submit" value="Create" /></p>
     </form>
   </article>
 }
@@ -59,21 +59,21 @@ function Create(props){
 function Update(props){
   const [title, setTitle]= useState(props.title);
   const [body, setBody] = useState(props.body);
-  return <article>
+  return <article className="app-contents">
     <h2>Update</h2>
-    <form onSubmit={ event => {
+    <form className="app-form" onSubmit={ event => {
       event.preventDefault();
       const title = event.target.title.value;
       const body = event.target.body.value;
       props.onUpdate(title, body);
     }}>
-      <p><input type="text" name="title" placeholder="title" value={title} onChange={ event => {
+      <p><input type="text" className="input" name="title" placeholder="title" value={title} onChange={ event => {
         setTitle(event.target.value);
       }} /></p>
-      <p><textarea name="body" placeholder="body" value={body} onChange={ event => {
+      <p><textarea name="body" rows="3" className="textarea" placeholder="body" value={body} onChange={ event => {
         setBody(event.target.value);
       }} ></textarea></p>
-      <p><input type="submit" value="Update" /></p>
+      <p><input type="submit" className="btn" value="Update" /></p>
     </form>
   </article>
 }
@@ -103,13 +103,13 @@ function App() {
     content = <Article title={title} body={body}></Article>;
     contextControl = <>
       <li>
-        <a href={'/update' + id} onClick={event => {
+        <a href={'/update' + id} className="btn" onClick={event => {
           event.preventDefault();
           setMode('UPDATE')
         }}>update</a>
       </li>
       <li>
-        <input type="button" value="Delete" onClick={event => {
+        <input type="button" className="btn" value="Delete" onClick={event => {
           event.preventDefault();
           const newTopics = topics.filter((item) => item.id !== parseInt(id));
           setTopics(newTopics);
@@ -151,20 +151,23 @@ function App() {
     setId(id);
   }
   return (
-    <div>
+    <section className="app">
       <Header title="React" onChangeMode={HeaderClick} />
       <Nav topics={topics} onChangeMode={NavClick}></Nav>
-      {content}
-      <ul>
+      <main className="app-body">
+        {content}
+        
+      </main>
+      <ul className="app-btn">
         <li>
-          <a href="/create" onClick={event => {
+          <a href="/create" className="btn" onClick={event => {
             event.preventDefault();
             setMode('CREATE')
           }}>create</a>
         </li>
         {contextControl}
       </ul>
-    </div>
+    </section>
   );
 }
 
